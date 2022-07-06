@@ -1,7 +1,7 @@
-NV9 USB Bill Validator Driver
+Bill Validator Driver
 =============================
 
-This is the repository for `nv9biller`, a simple driver for the NV9USB bill
+This is the repository for `Biller Validator`, a simple driver for the NV9USB bill
 validator using the SSP (unencrypted) protocol. Note that not all features may
 be available.
 
@@ -24,4 +24,10 @@ and then open a shell on the recently created Python virtual environment::
 
 Now you can run any of the examples, e.g.::
 
-    python examples/examples.py COM8
+    cd main
+Now you want to install all the requirements from the requirements.txt file using the following command::
+    pip install -r requirements.txt
+
+After successful installation of all the installations you can run the application using the following command::
+    python app.py
+
