@@ -1,9 +1,47 @@
-﻿@page
-@model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
-<style>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - NV200_Dashboard</title>
+     <link rel = "icon" href = "assets/img/favicon.ico" type = "image/x-icon">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/site.css" asp-append-version="true" />
+      <script src="lib/jquery/dist/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
+<!-- 
+    RTL version
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.rtl.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <script src="js/site.js" asp-append-version="true"></script>
+ <style>
+     body{
+        overflow: hidden !important;
+        background:#dd2a1c !important; 
+     }
+ </style>
+ <style>
   .card {
         height:200px !important;
         margin: 0px !important;
@@ -29,37 +67,48 @@
           max-width:fit-content !important;
       }
       </style>
+  <script type="text/javascript">
+//override defaults
+alertify.defaults.transition = "slide";
+alertify.defaults.theme.ok = "btn btn-primary";
+alertify.defaults.theme.cancel = "btn btn-danger";
+alertify.defaults.theme.input = "form-control";
+</script>
+</head>
+
+<body  >
+
 <!--START OF THE MAIN WINDOW-->
 
 
-<div class="container main" style="margin-top:0% !important;position:relative">
+<div class="container main" style="margin-top:-4% !important;position:relative">
     <div class="row  p-1 justify-content-around">
         <div data-server = "du"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 border-success" >
-            <img class="card-img-top" src="./assets/Du_logo.png" alt="Card image" style="width:100%;">
+            <img class="card-img-top" src="assets/img/Du_logo.png" alt="Card image" style="width:100%;">
             <div class="card-body text-center">
               <h4 class="card-title text-primary h3">DU</h4>
             </div>
           </div>
           <div data-server = "et"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 border-3 rounded border border-success">
-            <img class="card-img-top" src="./assets/vf-logo.jpg" alt="Card image" style="width:100%;height:120px !important">
+            <img class="card-img-top" src="assets/img/vf-logo.jpg" alt="Card image" style="width:100%;height:120px !important">
             <div class="card-body text-center">
               <h4 class="card-title text-primary h3">Etisalat</h4>
             </div>
           </div>
           <div data-server = "jwp"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
-            <img class="card-img-top" src="./assets/wifi.jpg" alt="Card image" style="width:100%;height:120px !important">
+            <img class="card-img-top" src="assets/img/wifi.jpg" alt="Card image" style="width:100%;height:120px !important">
             <div class="card-body text-center">
               <h4 class="card-title text-primary h3">WIFI</h4>
             </div>
           </div>
           <div data-server = "int-top"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
-            <center><img class="card-img-top" src="./assets/global.jpg" alt="Card image" style="width:110px !important;height:110px !important"></center>
+            <center><img class="card-img-top" src="assets/img/global.jpg" alt="Card image" style="width:110px !important;height:110px !important"></center>
             <div class="card-body text-center">
               <h4 class="card-title text-primary h5 fw-bold">International Topup</h4>
             </div>
           </div>
           <div data-server = "dxb-ch"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
-            <center><img class="card-img-top" src="./assets/dca.jpg" alt="Card image" style="width:110px !important;height:110px !important"></center>
+            <center><img class="card-img-top" src="assets/img/dca.jpg" alt="Card image" style="width:110px !important;height:110px !important"></center>
             <div class="card-body text-center">
               <h4 class="card-title text-primary h6 fw-bold">Dubai Charity Association</h4>
             </div>
@@ -68,31 +117,31 @@
 
     <div class="row p-1 justify-content-around">
         <div data-server = "itunes"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2 border-3 rounded border border-success">
-            <center><img class="card-img-top" src="./assets/itunes.png" alt="Card image" style="width:110px !important;height:110px !important"></center>
+            <center><img class="card-img-top" src="assets/img/itunes.png" alt="Card image" style="width:110px !important;height:110px !important"></center>
             <div class="card-body text-center">
               <h4 class="card-title text-primary h3">ITunes   Voucher</h4>
             </div>
           </div>
           <div data-server = "games"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
-            <img class="card-img-top" src="./assets/games.png" alt="games card image" style="width:100%;height:130px !important">
+            <img class="card-img-top" src="assets/img/games.png" alt="games card image" style="width:100%;height:130px !important">
             <div class="card-body text-center">
               <h4 class="card-title text-primary h3">Games</h4>
             </div>
           </div>
           <div data-server = "gpv"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
-            <img class="card-img-top" src="./assets/googlePlay.webp" alt="Card image" style="width:100%;height:110px !important">
+            <img class="card-img-top" src="assets/img/googlePlay.webp" alt="Card image" style="width:100%;height:110px !important">
             <div class="card-body text-center">
               <h4 class="card-title text-primary h5 fw-bold ">Google Play Voucher</h4>
             </div>
           </div>
           <div data-server = "oth"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2 border-3 rounded border border-success">
-            <center><img class="card-img-top" src="./assets/other.png" alt="Card image" style="width:140px !important;height:140px !important"></center>
+            <center><img class="card-img-top" src="assets/img/other.png" alt="Card image" style="width:140px !important;height:140px !important"></center>
             <div class="card-body text-center">
               <h4 class="card-title text-primary h4">Other</h4>
             </div>
           </div>
           <div data-server = "salik"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
-            <center><img class="card-img-top" src="./assets/saalik.jpg" alt="Card image" style="width:120px !important;height:120px !important"></center>
+            <center><img class="card-img-top" src="assets/img/saalik.jpg" alt="Card image" style="width:120px !important;height:120px !important"></center>
             <div class="card-body text-center">
               <h4 class="card-title text-primary h5 fw-bold">Salik Recharge</h4>
             </div>
@@ -102,13 +151,13 @@
     
     <div class="row p-1 justify-content-around">
       <div data-server = "hfc"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
-          <center><img class="card-img-top" src="./assets/hf.png" alt="Card image" style="width:110px !important;height:110px !important"></center>
+          <center><img class="card-img-top" src="assets/img/hf.png" alt="Card image" style="width:110px !important;height:110px !important"></center>
           <div class="card-body text-center">
             <h4 class="card-title text-primary h3">Hello & Five  Card</h4>
           </div>
         </div>
         <div data-server = "gf"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
-          <img class="card-img-top" src="./assets/games.png" alt="games card image" style="width:100%;height:120px !important">
+          <img class="card-img-top" src="assets/img/games.png" alt="games card image" style="width:100%;height:120px !important">
           <div class="card-body text-center">
             <h4 class="card-title text-primary h4 fw-bold">Gift Cards</h4>
           </div>
@@ -117,31 +166,31 @@
   </div>
   <div class="row p-1 justify-content-between">
     <div data-server = "pak"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
-        <center><img class="card-img-top" src="./assets/pak.png" alt="Card image" style="width:100% !important;height:110px !important"></center>
+        <center><img class="card-img-top" src="assets/img/pak.png" alt="Card image" style="width:100% !important;height:110px !important"></center>
         <div class="card-body text-center">
           <h4 class="card-title text-primary h3">Pakistan</h4>
         </div>
       </div>
       <div data-server = "ind"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
-        <img class="card-img-top" src="./assets/india.webp" alt="games card image" style="width:100%;height:130px !important">
+        <img class="card-img-top" src="assets/img/india.webp" alt="games card image" style="width:100%;height:130px !important">
         <div class="card-body text-center">
           <h4 class="card-title text-primary h3">India</h4>
         </div>
       </div>
       <div data-server = "nep"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
-        <img class="card-img-top" src="./assets/nep.png" alt="games card image" style="width:100%;height:130px !important">
+        <img class="card-img-top" src="assets/img/nep.png" alt="games card image" style="width:100%;height:130px !important">
         <div class="card-body text-center">
           <h4 class="card-title text-primary h3">Nepal</h4>
         </div>
       </div>
       <div data-server = "bg"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
-        <img class="card-img-top" src="./assets/bang.png" alt="games card image" style="width:100%;height:130px !important">
+        <img class="card-img-top" src="assets/img/bang.png" alt="games card image" style="width:100%;height:130px !important">
         <div class="card-body text-center">
           <h4 class="card-title text-primary h5 fw-bolder">Bangladesh</h4>
         </div>
       </div>
       <div data-server = "ph"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
-        <img class="card-img-top" src="./assets/phill.jpg" alt="games card image" style="width:100%;height:130px !important">
+        <img class="card-img-top" src="assets/img/phill.jpg" alt="games card image" style="width:100%;height:130px !important">
         <div class="card-body text-center">
           <h4 class="card-title text-primary  h5 fw-bolder">Philippines</h4>
         </div>
@@ -157,29 +206,29 @@
 
 </div>
 
-<div id="pin" class="p-2" style="transform:translate(-20%,-150%);">
-    <button class="lg-pin p-5" id="1"></button>
-     <button class="lg-pin p-5" id="2"></button>
+<div id="pin" class="p-2" style="transform:translate(-8.5%,-150%);">
+    <button class="lg-pin p-5" id="1">1</button>
+     <button class="lg-pin p-5" id="2">2</button>
 </div>
 <!--END OF THE MAIN WINDOW-->
 
     <div id="alert" style="display:none" class="col-5 bg-light p-1 text-center justify-content-center">
-    <center> <img src="./assets/nsp-logo-full.jpeg" /></center>
+    <center> <img src="assets/img/nsp-logo-full.jpeg" /></center>
     <p class="pulsate h1" style="font-size:70px !important">Mon - Sat : <b>09:00 - 06:00</b></p>
     </div>
   
     <div style="display:none"   id="coming-soon" class="col-5 bg-light p-1 text-center justify-content-center">
-    <center> <img src="./assets/nsp-logo-full.jpeg" /></center>
+    <center> <img src="assets/img/nsp-logo-full.jpeg" /></center>
   <center>  <p class=" pulsate h1" style="font-size:70px !important"><b>Coming Soon</b></p></center>
     </div>
 
-   
+   </body>
 <script>
 
     const Timeout = () => {
-    setInterval(function() {
-        myPin = "";
-    }, 5000);
+   setTimeout(function(){
+    window.location.href="/"
+   },REFRESH_INTERVAL)
 }
 
 const generatePass = () => {
@@ -200,6 +249,9 @@ const generatePass = () => {
             if(PIN == myPin){
                 window.location.href="/pin"
             }
+            if(PIN.length == myPin.length && PIN != myPin){
+              myPin = ""
+            }
         })
 
 
@@ -212,13 +264,13 @@ alertify.alert(pre).set({ title: "<h2 class='text-info'>Information</h2>" }).set
             $(".main").css("marginTop", "-1% !important");
         })
         $("#reciept").on("click", function() {
-            $.get(`https://${SERVER_IP}:443/cmdPrint`, function(d) { })
+            $.get(`/cmdPrint`, function(d) { })
         })
         $("#log").on("click", function() {
-            $.get(`https://${SERVER_IP}:443/printLog`, function(d) { })
+            $.get(`/printLog`, function(d) { })
         })
         $("#voucher").on("click", function() {
-            $.get(`https://${SERVER_IP}:443/voucherPrint`, function(d) { })
+            $.get(`/voucherPrint`, function(d) { })
         })
         $(".card").on("click", function() {
            
@@ -235,3 +287,4 @@ alertify.alert(pre).set({ title: "<h2 class='text-info'>Information</h2>" }).set
         })
     })
 </script>
+</html>

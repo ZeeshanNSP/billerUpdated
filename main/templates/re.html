@@ -1,10 +1,50 @@
-﻿@page
-@model NV200_Dashboard.Pages.reModel
-@{
-    ViewData["title"] = "Reciept";
-}
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reciept - NV200_Dashboard</title>
+     <link rel = "icon" href = "assets/img/favicon.ico" type = "image/x-icon">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/site.css" asp-append-version="true" />
+      <script src="lib/jquery/dist/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
- <!-- Modal -->
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
+<!-- 
+    RTL version
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.rtl.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <script src="js/site.js" asp-append-version="true"></script>
+ <style>
+     body{
+      overflow-y:auto !important;
+        background:#dd2a1c !important; 
+        height:fit-content !important;
+     }
+ </style>
+</head>
+<body>
 <div class="modal fade"  id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div style="background:#E4F0F0 !important"  class="modal-dialog">
     <div style="background:#E4F0F0 !important"  class="modal-content">
@@ -22,7 +62,7 @@
 <div class="container">
     <div role="form" class="form p-5 shadow-lg">
         <h1 class="text-light">Previous Reciept</h1>
-        <img class="shawdow-lg close-img" onclick="window.location.href='/'" src="./assets/close.png" />
+        <img class="shawdow-lg close-img" onclick="window.location.href='/'" src="assets/img/close.png" />
       <div class="d-flex d-inline-flex ">
         <div class="form-group m-2 col-4">
             <label class="text-light h3">Reciept #</label>
@@ -41,6 +81,7 @@
 
 
 </div>
+</body>
 <script>
 const handleNext = () => {
   window.location.href="/reciept"
@@ -57,7 +98,7 @@ const handleVerfiyReciept = () => {
     $(".keyboard").addClass("keyboard--hidden")
     showPleaseWait();
     //setTimeout(function() {
-        $.get(`https://${SERVER_IP}:443/check_reciept/`+rec, function(data) {
+        $.get(`/check_reciept/`+rec, function(data) {
         d = data;
         hidePleaseWait();
         console.log(d)
@@ -84,7 +125,7 @@ const handleVerfiyReciept = () => {
                     previous_json["plan"] = d["plan"]
                     
                     localStorage.setItem("obj", JSON.stringify(previous_json))
-
+                    hidePleaseWait()
                     let f = JSON.parse(localStorage.getItem("obj"))
             f["transaction"] = d;
            f["amount"] = d["total_payment"]
@@ -142,6 +183,7 @@ const handleVerfiyReciept = () => {
                 $("#previous-detail").html(HTML)
                 
                 $("#previous-detail").show()
+                hidePleaseWait()
                 }
             })
 
@@ -340,3 +382,4 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
+</html>

@@ -15,6 +15,7 @@ class VOUCHER:
         self.service = None
         self.phone = None
         self.plan = 0
+        self.terminal = None
         self.payment = 0
     
     def toJson(self) -> dict:
@@ -52,6 +53,7 @@ class TRANSACTION:
         self.pending_amount = 0
         self.plan = None
         self.total_payment = 0
+        self.terminal = None
 
     def toJson(self)-> dict:
         return self.__dict__
@@ -64,6 +66,7 @@ class LOG:
         self.time = dt_time
         self.date = dt_date
         self.log = None
+        self.terminal = None
     
     def toJson(self) -> dict:
         return self.__dict__
