@@ -33,7 +33,7 @@ logs = mydb["log"]
 terminals = mydb["terminal"]
 localConfig= None
 #CRON JOBS
-CRON_INTERVAL_DELAY = 30
+CRON_INTERVAL_DELAY = 5
 CRON_CONFIG_DOWNLOADER = None
 CRON_STACKER_UPLOADER = None
 

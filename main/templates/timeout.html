@@ -37,7 +37,7 @@
  <script src="js/site.js" asp-append-version="true"></script>
  <style>
      body{
-      overflow-y:auto !important;
+      overflow-y:hidden !important;
         background:#dd2a1c !important; 
         height:fit-content !important;
      }
@@ -52,7 +52,7 @@
 </body>
 <script>
 $(document).ready(function() {
-    $("body").css("background","url('./assets/timeout.jpg') !important")
+    $("body").css("background","url('assets/timeout.jpg') !important")
     $("body").css("background-size","cover !important")
     let d = JSON.parse(localStorage.getItem("obj"))
     if(d == undefined || d == null){
