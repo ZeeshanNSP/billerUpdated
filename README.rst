@@ -25,9 +25,12 @@ and then open a shell on the recently created Python virtual environment::
 Now you can run any of the examples, e.g.::
 
     cd main
+    
 Now you want to install all the requirements from the requirements.txt file using the following command::
+
     pip install -r requirements.txt
 
 After successful installation of all the installations you can run the application using the following command::
+
     python app.py
 
