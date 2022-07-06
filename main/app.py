@@ -3,6 +3,7 @@ from socket import timeout
 import sys
 import time
 from datetime import datetime
+import nv9biller
 import printer as p
 import time
 from nv9biller import Biller
@@ -177,7 +178,6 @@ def stat():
             "counter":getCounters(),
             "stacker_full":False
         }
-        
         if biller.stacker() :
             obj["stacker_full"] = True
         return obj
