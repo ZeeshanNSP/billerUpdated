@@ -1,0 +1,184 @@
+﻿@page
+@model NV200_Dashboard.Pages.terminalModel
+@{
+    ViewData["title"] = "Terminal Configuration";
+}
+<style>
+    ::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: gray; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(40,40,40,0.5); 
+}
+   .set{
+      overflow-y:auto !important;
+      max-height:100vh !important;
+      position:relative !important;
+   }
+   body{
+        background:orange !important;
+   }
+ 
+</style>
+
+<div class="container-fluid" >
+    <div class="container p-5 shadow set">
+        <h1 class="heading text-center text-capitalize text-light fw-bold">System Settings</h1>
+           <h3 class="text-light h3 text-capitalize">Status</h3>
+           <div style="margin-left:30px !important">
+           <h4  class="text-light h4 text-capitalize">Biller</h4>
+           <p class="text-light h6 text-capitalize fw-bold">Serial Number : <span id="serial" class="h6 text-light fw-bold text-capitalize"></span></p>
+           <p class="text-light h6 text-capitalize fw-bold">Counters :    
+               <table  style="margin-left:30px !important" class="table fw-bold text-light h6 text-capitalize">
+               
+                       <tr>
+                       <td>5 AED</td>
+                       <td id="p5">0</td>
+                   </tr>
+                   <tr>
+                       <td>10 AED</td>
+                       <td id="p10">0</td>
+                   </tr>
+                       <tr>
+                       <td>20 AED</td>
+                       <td id="p20">0</td>
+                   </tr>
+                       <tr>
+                       <td>50 AED</td>
+                       <td id="p50">0</td>
+                   </tr>
+                       <tr>
+                       <td>100 AED</td>
+                       <td id="p100">0</td>
+                   </tr>
+                       <tr>
+                       <td>200 AED</td>
+                       <td id="p200">0</td>
+                   </tr>
+                       <tr>
+                       <td>500 AED</td>
+                       <td id="p500">0</td>
+                   </tr>
+                   <tr>
+                       <td>Total (AED)</td>
+                       <td id="tt">0</td>
+                   </tr>
+               </table>
+           </p>
+           <p class="text-light h6 text-capitalize fw-bold">Cashbox: 
+               &nbsp;&nbsp;&nbsp;
+               
+               <div style="margin-left:30px">
+               <div class="d-inline-flex">
+                   <span id="stack-stat" class="text-light h6 text-capitalize fw-bold">nA</span>
+                   <div  style="margin-top:-5px !important" class="led"></div>
+               </div>
+               <br />
+               <button onclick="cashBoxOut()"  class="btn btn-light text-dark fw-bold">Open Cashbox</button>
+               </div>
+           </p>
+             <p class="text-light h6 text-capitalize fw-bold">Printer: 
+              <br /><br />
+               <button style="margin-left:30px" class="btn btn-primary  fw-bold" id="tp" >Print Test Page</button>
+               
+           </p>
+            <p class="text-light h6 text-capitalize fw-bold">Other Tests: 
+              <br /><br />
+              <div style="margin-left:30px" class="col-12 p-2 justify-content-center d-flex d-inline-flex">
+                      <a  class="btn m-1 btn-primary  fw-bold" onclick="pintTest()">Ping System</a>
+                       <a  class="btn m-1 btn-success  fw-bold" onclick="Log()">Log</a>
+                        <a  class="btn m-1 btn-dark  fw-bold" onclick="window.location.href='/'">Exit</a>
+              </div>
+           
+               
+           </p>
+           </div> 
+    </div>
+</div>
+ <!-- Modal -->
+<div class="modal fade"  id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div style="background:#E4F0F0 !important"  class="modal-dialog">
+    <div style="background:#E4F0F0 !important"  class="modal-content">
+      <div style="background:#E4F0F0 !important"  class="modal-header">
+          <h1>Please Wait.</h1>
+      </div>
+      <div style="background:#E4F0F0 !important"  class="modal-body justify-content-center text-center">
+      <img src="https://i.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.webp">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+            <script>
+                const resetCounters = ()=>{
+                    $.get(`https://${SERVER_IP}:443/cnt-rst`, function(d) {
+                        window.location.reload()
+                    })
+                }
+
+    const Log =() => {
+        $.get(`https://${SERVER_IP}:443/printLog`, function(d) { 
+            
+        })
+
+}
+                const pintTest = ()=>{
+                    showPleaseWait()
+                    $.get(`https://${SERVER_IP}:443/ping-test`,function(d){
+                       hidePleaseWait()
+                           alertify.alert(`<pre class='text-dark fw-bold h6'>${d["log"]}</pre>`).set({ title: `Ping <b>${d["status"]}</b>` }).set('closable', false).show();
+                    })
+                }
+const cashBoxOut = () => {
+    $.get(`https://${SERVER_IP}:443/printLog`, function(res) {
+         $.get(`https://${SERVER_IP}:443/print-counters`,function(res){
+                 $.get(`https://${SERVER_IP}:443/printLog`, function(res) {
+            $.get(`https://${SERVER_IP}:443/print-counters`,function(res){
+
+            })
+            resetCounters()
+        })
+            })
+       
+    })
+}
+$(document).ready(function() {
+    $("#tp").on("click", function(){
+           $.get(`https://${SERVER_IP}:443/testPagePrint`, () => {});
+    });
+    $.get(`https://${SERVER_IP}:443/stacker_stat`,function(d){
+        $("#serial").text(d["serial"])
+        $("#tt").text(d["counter"]["total"])
+        $("#p5").text(d["counter"]["5"])
+        $("#p10").text(d["counter"]["10"])
+        $("#p20").text(d["counter"]["20"])
+        $("#p50").text(d["counter"]["50"])
+        $("#p100").text(d["counter"]["100"])
+        $("#p200").text(d["counter"]["200"])
+         $("#p500").text(d["counter"]["500"])
+        if(d["stacker_full"] == true){
+            $("#stack-stat").text("Full")
+            $(".led").addClass("led-off")
+        }
+        else{
+            $("#stack-stat").text("Not Full")
+            $(".led").addClass("led-on")
+        }
+    })
+})
+            </script>

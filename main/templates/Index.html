@@ -1,0 +1,237 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<style>
+  .card {
+        height:200px !important;
+        margin: 0px !important;
+      }
+      *{
+        outline: none !important;
+        user-select: none !important;
+
+      }
+      #pin button{
+           background: transparent !important;
+    border: none !important;
+    font-size:0px !important ;
+      }
+   
+      body{
+        width:100%  !important;
+        max-width:100% !important;
+       
+        transform: scale(0.85) !important;
+      }
+      .alertify .ajs-dialog{
+          max-width:fit-content !important;
+      }
+      </style>
+<!--START OF THE MAIN WINDOW-->
+
+
+<div class="container main" style="margin-top:0% !important;position:relative">
+    <div class="row  p-1 justify-content-around">
+        <div data-server = "du"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 border-success" >
+            <img class="card-img-top" src="./assets/Du_logo.png" alt="Card image" style="width:100%;">
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h3">DU</h4>
+            </div>
+          </div>
+          <div data-server = "et"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 border-3 rounded border border-success">
+            <img class="card-img-top" src="./assets/vf-logo.jpg" alt="Card image" style="width:100%;height:120px !important">
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h3">Etisalat</h4>
+            </div>
+          </div>
+          <div data-server = "jwp"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
+            <img class="card-img-top" src="./assets/wifi.jpg" alt="Card image" style="width:100%;height:120px !important">
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h3">WIFI</h4>
+            </div>
+          </div>
+          <div data-server = "int-top"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
+            <center><img class="card-img-top" src="./assets/global.jpg" alt="Card image" style="width:110px !important;height:110px !important"></center>
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h5 fw-bold">International Topup</h4>
+            </div>
+          </div>
+          <div data-server = "dxb-ch"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
+            <center><img class="card-img-top" src="./assets/dca.jpg" alt="Card image" style="width:110px !important;height:110px !important"></center>
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h6 fw-bold">Dubai Charity Association</h4>
+            </div>
+          </div>
+    </div>
+
+    <div class="row p-1 justify-content-around">
+        <div data-server = "itunes"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2 border-3 rounded border border-success">
+            <center><img class="card-img-top" src="./assets/itunes.png" alt="Card image" style="width:110px !important;height:110px !important"></center>
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h3">ITunes   Voucher</h4>
+            </div>
+          </div>
+          <div data-server = "games"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
+            <img class="card-img-top" src="./assets/games.png" alt="games card image" style="width:100%;height:130px !important">
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h3">Games</h4>
+            </div>
+          </div>
+          <div data-server = "gpv"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
+            <img class="card-img-top" src="./assets/googlePlay.webp" alt="Card image" style="width:100%;height:110px !important">
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h5 fw-bold ">Google Play Voucher</h4>
+            </div>
+          </div>
+          <div data-server = "oth"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2 border-3 rounded border border-success">
+            <center><img class="card-img-top" src="./assets/other.png" alt="Card image" style="width:140px !important;height:140px !important"></center>
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h4">Other</h4>
+            </div>
+          </div>
+          <div data-server = "salik"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2  border-3 rounded border border-success">
+            <center><img class="card-img-top" src="./assets/saalik.jpg" alt="Card image" style="width:120px !important;height:120px !important"></center>
+            <div class="card-body text-center">
+              <h4 class="card-title text-primary h5 fw-bold">Salik Recharge</h4>
+            </div>
+          </div>
+    </div>
+
+    
+    <div class="row p-1 justify-content-around">
+      <div data-server = "hfc"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
+          <center><img class="card-img-top" src="./assets/hf.png" alt="Card image" style="width:110px !important;height:110px !important"></center>
+          <div class="card-body text-center">
+            <h4 class="card-title text-primary h3">Hello & Five  Card</h4>
+          </div>
+        </div>
+        <div data-server = "gf"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
+          <img class="card-img-top" src="./assets/games.png" alt="games card image" style="width:100%;height:120px !important">
+          <div class="card-body text-center">
+            <h4 class="card-title text-primary h4 fw-bold">Gift Cards</h4>
+          </div>
+        </div>
+        
+  </div>
+  <div class="row p-1 justify-content-between">
+    <div data-server = "pak"  class="shadow  bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
+        <center><img class="card-img-top" src="./assets/pak.png" alt="Card image" style="width:100% !important;height:110px !important"></center>
+        <div class="card-body text-center">
+          <h4 class="card-title text-primary h3">Pakistan</h4>
+        </div>
+      </div>
+      <div data-server = "ind"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
+        <img class="card-img-top" src="./assets/india.webp" alt="games card image" style="width:100%;height:130px !important">
+        <div class="card-body text-center">
+          <h4 class="card-title text-primary h3">India</h4>
+        </div>
+      </div>
+      <div data-server = "nep"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
+        <img class="card-img-top" src="./assets/nep.png" alt="games card image" style="width:100%;height:130px !important">
+        <div class="card-body text-center">
+          <h4 class="card-title text-primary h3">Nepal</h4>
+        </div>
+      </div>
+      <div data-server = "bg"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
+        <img class="card-img-top" src="./assets/bang.png" alt="games card image" style="width:100%;height:130px !important">
+        <div class="card-body text-center">
+          <h4 class="card-title text-primary h5 fw-bolder">Bangladesh</h4>
+        </div>
+      </div>
+      <div data-server = "ph"  class="shadow bg-white rounded card col-sm-12 col-md-2 col-lg-2 m-1 border-3 rounded border border-success">
+        <img class="card-img-top" src="./assets/phill.jpg" alt="games card image" style="width:100%;height:130px !important">
+        <div class="card-body text-center">
+          <h4 class="card-title text-primary  h5 fw-bolder">Philippines</h4>
+        </div>
+      </div>
+      
+</div>
+<center>
+<div class="row justify-content-between">
+  <p class=" text-warning h3 col-lg-6" >Information <span style="color: white !important" class="pulsate">0675757575875</span>&nbsp;&nbsp;<span  dir="rtl" lang="ar">&nbsp; معلومة</span></p>
+  <p class="text-warning h3 col-lg-6"  id="wh" >Working Hours &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span  dir="rtl" lang="ar">&nbsp; ساعات العمل</span></p>
+</div>
+</center>
+
+</div>
+
+<div id="pin" class="p-2" style="transform:translate(-20%,-150%);">
+    <button class="lg-pin p-5" id="1"></button>
+     <button class="lg-pin p-5" id="2"></button>
+</div>
+<!--END OF THE MAIN WINDOW-->
+
+    <div id="alert" style="display:none" class="col-5 bg-light p-1 text-center justify-content-center">
+    <center> <img src="./assets/nsp-logo-full.jpeg" /></center>
+    <p class="pulsate h1" style="font-size:70px !important">Mon - Sat : <b>09:00 - 06:00</b></p>
+    </div>
+  
+    <div style="display:none"   id="coming-soon" class="col-5 bg-light p-1 text-center justify-content-center">
+    <center> <img src="./assets/nsp-logo-full.jpeg" /></center>
+  <center>  <p class=" pulsate h1" style="font-size:70px !important"><b>Coming Soon</b></p></center>
+    </div>
+
+   
+<script>
+
+    const Timeout = () => {
+    setInterval(function() {
+        myPin = "";
+    }, 5000);
+}
+
+const generatePass = () => {
+    var today = new Date();
+    var date = today.getDate()
+    var siteID = SITE_ID
+    let PIN = `1221`
+    return PIN
+}
+
+   const PIN = generatePass()
+        var myPin = "";
+    $(document).ready(function(){
+     Timeout()
+        $(".lg-pin").on("click", function(e) {
+            var text = e.target.id
+            myPin += text
+            if(PIN == myPin){
+                window.location.href="/pin"
+            }
+        })
+
+
+        localStorage.clear()
+        $("#wh").on("click",function(){
+            var pre = document.createElement('div');
+$(pre).html($('#alert').html());
+//show as confirm
+alertify.alert(pre).set({ title: "<h2 class='text-info'>Information</h2>" }).set('closable', false).set({ padding: true});
+            $(".main").css("marginTop", "-1% !important");
+        })
+        $("#reciept").on("click", function() {
+            $.get(`https://${SERVER_IP}:443/cmdPrint`, function(d) { })
+        })
+        $("#log").on("click", function() {
+            $.get(`https://${SERVER_IP}:443/printLog`, function(d) { })
+        })
+        $("#voucher").on("click", function() {
+            $.get(`https://${SERVER_IP}:443/voucherPrint`, function(d) { })
+        })
+        $(".card").on("click", function() {
+           
+            let selected = $(this).attr("data-server").trim()
+            if (isIn(selected,ALLOWED_SERVICES)) {
+                window.location.href=`/${selected}`
+            }else{
+                 var pre = document.createElement('div');
+$(pre).html($('#coming-soon').html());
+//show as confirm
+alertify.alert(pre).set({ title: "<h2 class='text-info'>Information</h2>" }).set('closable', false).set({ padding: true});
+     $(".main").css("marginTop", "-1% !important");
+            }
+        })
+    })
+</script>

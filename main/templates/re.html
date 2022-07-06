@@ -1,0 +1,342 @@
+﻿@page
+@model NV200_Dashboard.Pages.reModel
+@{
+    ViewData["title"] = "Reciept";
+}
+
+ <!-- Modal -->
+<div class="modal fade"  id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div style="background:#E4F0F0 !important"  class="modal-dialog">
+    <div style="background:#E4F0F0 !important"  class="modal-content">
+      <div style="background:#E4F0F0 !important"  class="modal-header">
+          <h1>Verifing Details...</h1>
+      </div>
+      <div style="background:#E4F0F0 !important"  class="modal-body justify-content-center text-center">
+      <img src="https://i.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.webp">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+    <div role="form" class="form p-5 shadow-lg">
+        <h1 class="text-light">Previous Reciept</h1>
+        <img class="shawdow-lg close-img" onclick="window.location.href='/'" src="./assets/close.png" />
+      <div class="d-flex d-inline-flex ">
+        <div class="form-group m-2 col-4">
+            <label class="text-light h3">Reciept #</label>
+            <input type="text"  id="reciept" class="re use-keyboard-input form-control" />
+        </div>
+        <div class="form-group mt-4 col-4">       
+              <button type="button" class=" p-4 btn btn-primary" onclick="handleVerfiyReciept()" style="margin-top:87px !important;font-size:2rem;">Check</button>
+        </div>
+        </div>
+        <center>
+      <div id="previous-detail" class=" justify-content-center">
+         
+      </div>
+      </center>
+    </div>
+
+
+</div>
+<script>
+const handleNext = () => {
+  window.location.href="/reciept"
+}
+$(document).ready(function() {
+  
+})
+const handleVerfiyReciept = () => {
+    let rec = $("#reciept").val().trim()
+    if (rec.length == 0) {
+        return
+    }
+    $("#previous-detail").hide();
+    $(".keyboard").addClass("keyboard--hidden")
+    showPleaseWait();
+    //setTimeout(function() {
+        $.get(`https://${SERVER_IP}:443/check_reciept/`+rec, function(data) {
+        d = data;
+        hidePleaseWait();
+        console.log(d)
+        if (Object.keys(d).length > 0 ) {
+              hidePleaseWait()
+              let y  =localStorage.getItem("obj")
+              if(y == null || y == undefined){
+                  localStorage.setItem("obj","{}")
+              }
+              let num = d["phone"]
+              console.log(num)
+            $.get(`${GET_USER_END_POINT}${num}`, function(data) {
+                df = JSON.parse(data);
+               console.log(df)
+                if (df.length > 0) {
+                    person = df[0]
+                    let previous_json = JSON.parse(localStorage.getItem("obj"))
+                    if (previous_json == null || previous_json == undefined) {
+                        previous_json = {}
+                    }
+                    previous_json["company"] = "JWP";
+                    previous_json["number"] = num;
+                    previous_json["person"] = person
+                    previous_json["plan"] = d["plan"]
+                    
+                    localStorage.setItem("obj", JSON.stringify(previous_json))
+
+                    let f = JSON.parse(localStorage.getItem("obj"))
+            f["transaction"] = d;
+           f["amount"] = d["total_payment"]
+            localStorage.setItem("obj", JSON.stringify(f));
+            
+            $("#previous-detail").html("")
+            var HTML =` <div class="row p-4 justify-content-center">
+              <div class="col-4">
+                  <div class="card shadow-lg text-light p-5 bg-success">
+                      <table border="0" cellspacing="0" cellpadding="0">
+                       <tr>
+                           <td colspan="2"><span class="h4"><b>Your Selected Package</b></span></td>
+                       </tr>
+                          <tr>
+                            <td><b>Name </b></td>
+                            <td><b>${d["plan"]["profile"]} </b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Price </b></td>
+                            <td><b>${d["plan"]["price"]} AED </b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Validity </b></td>
+                            <td><b>${d["plan"]["validity"]} </b></td>
+                        </tr>
+                      </table>
+                  </div>
+              </div>
+              <div class="col-4">
+                  <div class="card shadow-lg text-light p-5 bg-primary">
+                     <table border="0" cellspacing="0" cellpadding="0">
+                       <tr>
+                           <td colspan="2"><span class="h4"><b>Reciept Detail</b></span></td>
+                       </tr>
+                          <tr>
+                            <td><b>Remaining </b></td>
+                            <td><b>${d["pending_amount"]} AED </b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Total </b></td>
+                            <td><b>${d["total_payment"]} AED </b></td>
+                        </tr>
+                         <tr>
+                            <td colspan="2">
+                              &nbsp;
+                            </td>
+                            
+                        </tr>
+                       
+                      </table>
+                  </div>
+              </div>
+          </div>
+            <buttom onclick="handleNext()" class="btn btn-outline-light p-3 col-3" style="font-size:2rem">Next</buttom>`
+                $("#previous-detail").html(HTML)
+                
+                $("#previous-detail").show()
+                }
+            })
+
+
+
+
+           
+        }
+        else {
+            hidePleaseWait();
+            alertify.alert("<h1 class='text-danger'>Reciept Already Used or Invalid</h1>").set({ title: "Error" }).set('closable', false).set("onok", function() {hidePleaseWait() }).show();
+        }
+       
+    })
+   // },1500)
+    
+}
+
+
+    const Keyboard = {
+    elements: {
+        main: null,
+        keysContainer: null,
+        keys: []
+    },
+
+    eventHandlers: {
+        oninput: null,
+        onclose: null
+    },
+
+    properties: {
+        value: "",
+        capsLock: false
+    },
+
+    init() {
+        // Create main elements
+        this.elements.main = document.createElement("div");
+        this.elements.keysContainer = document.createElement("div");
+
+        // Setup main elements
+        this.elements.main.classList.add("keyboard", "keyboard--hidden");
+        this.elements.keysContainer.classList.add("keyboard__keys");
+        this.elements.keysContainer.appendChild(this._createKeys());
+
+        this.elements.keys = this.elements.keysContainer.querySelectorAll(".keyboard__key");
+
+        // Add to DOM
+        this.elements.main.appendChild(this.elements.keysContainer);
+        document.body.appendChild(this.elements.main);
+
+        // Automatically use keyboard for elements with .use-keyboard-input
+        document.querySelectorAll(".use-keyboard-input").forEach(element => {
+            element.addEventListener("focus", () => {
+                this.open(element.value, currentValue => {
+                    element.value = currentValue;
+                });
+            });
+        });
+    },
+
+    _createKeys() {
+        const fragment = document.createDocumentFragment();
+        const keyLayout = [
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+            "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+            "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
+            "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
+            "space"
+        ];
+
+        // Creates HTML for an icon
+        const createIconHTML = (icon_name) => {
+            return `<i class="material-icons">${icon_name}</i>`;
+        };
+
+        keyLayout.forEach(key => {
+            const keyElement = document.createElement("button");
+            const insertLineBreak = ["backspace", "p", "enter", "?"].indexOf(key) !== -1;
+
+            // Add attributes/classes
+            keyElement.setAttribute("type", "button");
+            keyElement.classList.add("keyboard__key");
+
+            switch (key) {
+                case "backspace":
+                    keyElement.classList.add("keyboard__key--wide");
+                    keyElement.innerHTML = createIconHTML("backspace");
+
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                        this._triggerEvent("oninput");
+                    });
+
+                    break;
+
+                case "caps":
+                    keyElement.classList.add("keyboard__key--wide", "keyboard__key--activatable");
+                    keyElement.innerHTML = createIconHTML("keyboard_capslock");
+
+                    keyElement.addEventListener("click", () => {
+                        this._toggleCapsLock();
+                        keyElement.classList.toggle("keyboard__key--active", this.properties.capsLock);
+                    });
+
+                    break;
+
+                case "enter":
+                    keyElement.classList.add("keyboard__key--wide");
+                    keyElement.innerHTML = createIconHTML("keyboard_return");
+
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += "\n";
+                        this._triggerEvent("oninput");
+                    });
+
+                    break;
+
+                case "space":
+                    keyElement.classList.add("keyboard__key--extra-wide");
+                    keyElement.innerHTML = createIconHTML("space_bar");
+
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += " ";
+                        this._triggerEvent("oninput");
+                    });
+
+                    break;
+
+                case "done":
+                    keyElement.classList.add("keyboard__key--wide", "keyboard__key--dark");
+                    keyElement.innerHTML = createIconHTML("check_circle");
+
+                    keyElement.addEventListener("click", () => {
+                        this.close();
+                        this._triggerEvent("onclose");
+                    });
+
+                    break;
+
+                default:
+                    keyElement.textContent = key.toLowerCase();
+
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        this._triggerEvent("oninput");
+                    });
+
+                    break;
+            }
+
+            fragment.appendChild(keyElement);
+
+            if (insertLineBreak) {
+                fragment.appendChild(document.createElement("br"));
+            }
+        });
+
+        return fragment;
+    },
+
+    _triggerEvent(handlerName) {
+        if (typeof this.eventHandlers[handlerName] == "function") {
+            this.eventHandlers[handlerName](this.properties.value);
+        }
+    },
+
+    _toggleCapsLock() {
+        this.properties.capsLock = !this.properties.capsLock;
+
+        for (const key of this.elements.keys) {
+            if (key.childElementCount === 0) {
+                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+            }
+        }
+    },
+
+    open(initialValue, oninput, onclose) {
+        this.properties.value = initialValue || "";
+        this.eventHandlers.oninput = oninput;
+        this.eventHandlers.onclose = onclose;
+        this.elements.main.classList.remove("keyboard--hidden");
+    },
+
+    close() {
+        this.properties.value = "";
+        this.eventHandlers.oninput = oninput;
+        this.eventHandlers.onclose = onclose;
+        this.elements.main.classList.add("keyboard--hidden");
+    }
+};
+
+window.addEventListener("DOMContentLoaded", function () {
+    Keyboard.init();
+});
+
+</script>

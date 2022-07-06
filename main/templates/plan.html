@@ -1,0 +1,92 @@
+﻿@page
+@model NV200_Dashboard.Pages.planModel
+@{
+    ViewData["Title"] = "Plan";
+}
+<style>
+    body {
+        height:fit-content !important;
+        overflow-y:auto !important;
+    }
+</style>
+<div class="container text-center text-light mt-5">
+   <center>
+      <h1 class="text-light heading font-weight-bold">Select Your Plan</h1>
+   <div id="plans"  class="row bg-transparent p-2 justify-content-center">
+  
+</div>
+
+  <a href="/" class="m-4 col-3 btn p-4 btn-danger">Cancel</a>
+    </center>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade"  id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div style="background:#E4F0F0 !important"  class="modal-dialog">
+    <div style="background:#E4F0F0 !important"  class="modal-content">
+      <div style="background:#E4F0F0 !important"  class="modal-header">
+          <h1>Loading Plans...</h1>
+      </div>
+      <div style="background:#E4F0F0 !important"  class="modal-body justify-content-center text-center">
+      <img src="https://i.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.webp">
+      </div>
+    </div>
+  </div>
+</div>
+      <script>
+
+          $(document).ready(function(){
+
+               $('#pleaseWaitDialog').modal({
+    backdrop: 'static',
+    keyboard: false
+})     
+
+                showPleaseWait();
+               $.get(GET_PROFILES_END_POINT, function (data) {
+               //    $("#plans").html(`<h2 class="pulsate text-light">Loading Plans Please Wait...</h2>`)
+        d = JSON.parse(data)
+ if(d.length > 10){
+      //   margin-top: -5%;
+    //transform: scale(0.9);
+     $(".container").css("margin-top", "-5% !important");
+     $(".container").css("transform","scale(0.9) !important")
+ }
+     for(i in d){
+        plan = d[i]
+       
+        let html =`<div data-profile-name="${plan['profile_name']}" data-validity="${plan['profile_validity']}" data-price="${plan['profile_price']}" class="plan card col-2 m-1"  style="background-image: repeating-linear-gradient(to right,purple, blue);">
+    <div class="card-body">
+      <h4 class="card-title h1">${plan['profile_price']} AED</h4>
+      <p class="card-text">Validity : ${plan['profile_validity'].replace("d","").trim()} days</p>
+    </div>
+  </div> `
+        $("#plans").append(html)
+     }
+                   $("body").fadeIn();
+                     $(".plan").on("click",function(){
+                  let PLAN = {
+                      'profile': $($(this)).attr("data-profile-name"),
+                      'validity':$($(this)).attr("data-validity"),
+                      'price':$($(this)).attr("data-price")
+                  }
+              
+
+                   let previous_json = JSON.parse(localStorage.getItem("obj"))
+                         previous_json["plan"] = PLAN;
+                    previous_json["amount"] = PLAN['price']
+
+                    localStorage.setItem("obj",JSON.stringify(previous_json))
+                    window.location.href="/cash-accepter-jwp"
+                   
+
+              })
+              hidePleaseWait()
+    })
+
+
+
+            
+          })
+      </script>

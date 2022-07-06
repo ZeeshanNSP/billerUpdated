@@ -1,0 +1,98 @@
+﻿@page
+
+@model NV200_Dashboard.Pages.cash_acceptorModel
+@{
+    ViewData["Title"] = "Cash";
+}
+<div class="container">
+<h1 class="heading text-light text-bold">@Model.Message</h1>
+
+
+  <div class="navigation-buttons d-flex justify-content-between col-12">
+          <div class="back-button">
+            
+        </div>
+         <div class="next-button">
+            
+        </div>
+      </div>
+      <div class="row" style="transform:translateY(-70%) !important;height:600px !important;background:rgba(255,255,255,0.2);border-radius:20px !important;box-shadow:0px 0px 8px #fff;z-index:200 !important">
+          <div class="col-6 justify-content-center text-center">
+              <div class="col-12 justify-content-center text-center" style="margin-top:15px !important">
+                  <div class="card text-center text-light bg-primary">
+                      <small> Amount</small>
+                     <h1 style="font-size:75px !important"> AED <span class="text-light text-bold" id="balance" >0.00</span></h1>
+                  </div>
+                  <br>
+
+                  <div class="card border-0  bg-transparent justify-content-center text-center" style="overflow:hidden;padding:10px !important">
+                  <center>
+                      <img src="./assets/cash_in.gif" class="text-center" style="border-radius:15px !important;overflow:hidden;width:360px;height:390px !important">
+                  </center>  
+                  </div>
+
+              </div>
+          </div>
+          <div class="col-6">
+                 <div class="card text-center text-light bg-success" id="right-status">
+                      <small> Currency Notes</small>
+                     <h1 style="font-size:75px !important"> AED <span class="text-light text-bold" id="currency" ></span></h1>
+                     <h3 class="text-warning" id="status">Please Wait....</h3>
+                      
+                 </div>
+           
+              </div>
+      </div>
+      <!-- Modal -->
+<div class="modal fade"  id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div style="background:#E4F0F0 !important"  class="modal-dialog">
+    <div style="background:#E4F0F0 !important"  class="modal-content">
+      <div style="background:#E4F0F0 !important"  class="modal-header">
+          <h1>Processing...</h1>
+      </div>
+      <div style="background:#E4F0F0 !important"  class="modal-body justify-content-center text-center">
+      <img src="https://i.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.webp">
+      </div>
+    </div>
+  </div>
+</div>
+      
+</div>
+<script>
+    
+    var total_balance = parseFloat($("#balance").text()) 
+    function enableNV (){
+    var I = setInterval(()=>{
+    console.log("ACCEPTING MONEY")
+           $.get(`https://${SERVER_IP}:443/accept-money`,function(Data){
+               $("#currency").text(Data)
+               total_balance += parseFloat(Data)
+                $("#balance").text(total_balance);
+           })
+       },500)
+
+       $(".next-button").on("click",function(){
+           clearInterval(I);
+           data = JSON.parse(localStorage.getItem("obj"))
+            data["amount"]= $("#balance").text()
+               $.post(`https://${SERVER_IP}:443/cmdPrint`, data, function(d) {
+                   
+               
+           })
+       })
+
+        
+}
+
+$(document).ready(()=>{
+        
+        $('#pleaseWaitDialog').modal({
+    backdrop: 'static',
+    keyboard: false
+})     
+        $("#balance").text("0.00");
+    //    $("#acceptMoney").on("click", enableNV());  
+         enableNV()
+    })
+    
+</script>

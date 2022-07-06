@@ -1,0 +1,26 @@
+﻿@page
+@model NV200_Dashboard.Pages.finalModel
+@{
+    ViewData["Title"] = "Success";
+}
+
+
+<div class="container  p-5">
+    <div class="card rounded-3 text-center justify-content-center" id="final-modal" >
+        <div class="card-body">
+            <h3 class="text-dark">Successfully Transferred</h3>
+        </div>  
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+         alertify.success("Now Printing")
+        setTimeout(() => {
+            $("body").html("<img src='./assets/final.jpg'>");
+            setTimeout(() => {
+                window.location.href = "/"
+            }, 3500);
+        }, 2500);
+    })
+</script>

@@ -1,0 +1,72 @@
+﻿@page
+@model NV200_Dashboard.Pages.pinModel
+@{
+    ViewData["Title"] = "pin";
+}
+<div class="container p-5">
+       <div class="row col-12" style="height:600px !important;z-index:200 !important">
+           <div class="col justify-content-center" id="num-keys">
+               <center>
+               <table style="padding:10px !important">
+                    <tr>
+                        <td  class="digit">1</td>
+                         <td  class="digit">2</td>
+                          <td  class="digit">3</td>
+                    </tr>
+                     <tr>
+                        <td  class="digit">4</td>
+                         <td  class="digit">5</td>
+                          <td  class="digit">6</td>
+                    </tr>
+                     <tr>
+                        <td  class="digit">7</td>
+                         <td  class="digit">8</td>
+                          <td  class="digit">9</td>
+                    </tr>
+                     <tr>
+                        <td  class="digit" colspan="3">0</td>
+                          
+                    </tr>
+                </table>
+                </center>
+           </div>
+       </div>
+</div>
+ <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"
+            integrity="sha256-yE5LLp5HSQ/z+hJeCqkz9hdjNkk1jaiGG0tDCraumnA="
+            crossorigin="anonymous">
+    </script>
+<script>
+
+const Timeout = () => {
+    setTimeout(function() {
+            window.location.href="/"
+    }, 10000);
+}
+
+const generatePass = () => {
+    var today = new Date();
+    var date = today.getDate()
+    var siteID = SITE_ID
+    let PIN = `159357${date}`
+    return PIN
+}
+    $(document).ready(function(){
+        Timeout()
+        const expectedPass = generatePass();
+        var myPass = ""
+          $(".digit").on("click",(e)=>{
+              text = e.target.innerText;
+              console.log(text)
+            myPass +=text
+              if (expectedPass == myPass) {
+                  window.location.href="/terminal"
+              }
+            
+        
+          })
+         //xxx-xxx-xxxx
+
+    })
+</script>

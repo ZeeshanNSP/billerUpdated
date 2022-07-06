@@ -1,0 +1,136 @@
+﻿@page
+@model NV200_Dashboard.Pages.cash_accepter_jwpModel
+@{
+    ViewData["Title"] = "CASHJWP";
+}
+<div class="container">
+<h1 class="heading text-light text-bold">Accepting Cash</h1>
+
+
+  <div class="navigation-buttons d-flex justify-content-between col-12">
+          <div class="back-button">
+            
+        </div>
+         <div class="next-button">
+            
+        </div>
+      </div>
+      <div class="row" style="transform:translateY(-70%) !important;height:600px !important;background:rgba(255,255,255,0.2);border-radius:20px !important;box-shadow:0px 0px 8px #fff;z-index:200 !important">
+          <div class="col-6 justify-content-center text-center">
+              <div class="col-12 justify-content-center text-center" style="margin-top:15px !important">
+                  <div class="card text-center text-light bg-primary">
+                      <small> Amount</small>
+                     <h1 style="font-size:75px !important"> AED <span class="text-light text-bold" id="balance" >0.00</span></h1>
+                  </div>
+                  <br>
+
+                  <div class="card border-0  bg-transparent justify-content-center text-center" style="overflow:hidden;padding:10px !important">
+                  <center>
+                      <img src="./assets/cash_in.gif" class="text-center" style="border-radius:15px !important;overflow:hidden;width:360px;height:390px !important">
+                  </center>  
+                  </div>
+
+              </div>
+          </div>
+          <div class="col-6">
+                 <div class="card text-center text-light bg-success" id="right-status">
+                      <small> Currency Notes</small>
+                      <div><small  style="font-size:22px !important;font-weight:bolder">Insert <span id="mon">0.00</span> AED</small><br />
+                    <small class="pulsate" style="font-size:15px !important;font-weight:bold">Please note that no change will be returned and insert only 5,10,20 Bank Notes</small></div>
+                      
+                      <h1 style="font-size:75px !important"> AED <span class="text-light text-bold" id="currency" ></span></h1>
+                     <h3 class="text-warning" id="status">Please Wait....</h3>
+                      
+                 </div>
+           
+              </div>
+      </div>
+      <!-- Modal -->
+<div class="modal fade"  id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div style="background:#E4F0F0 !important"  class="modal-dialog">
+    <div style="background:#E4F0F0 !important"  class="modal-content">
+      <div style="background:#E4F0F0 !important"  class="modal-header">
+          <h1>Processing...</h1>
+      </div>
+      <div style="background:#E4F0F0 !important"  class="modal-body justify-content-center text-center">
+      <img src="https://i.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.webp">
+      </div>
+    </div>
+  </div>
+</div>
+      
+</div>
+<script>
+    
+    var total_balance = parseFloat($("#balance").text()) 
+    var m = parseFloat($("#mon").text())
+    var n = parseFloat($("#balance").text())
+    var remBal =  m-n
+    function enableNV (){
+        
+
+
+         const req_timeout = setTimeout(() => {
+                           
+                            let d = JSON.parse(localStorage.getItem("obj"))
+                            let acc  = parseFloat($("#balance").text())
+                            let t = parseFloat($("#mon").text())
+                            console.log("TIMED OUT");
+                            let rm = t- acc
+                            d["amount"] = acc
+                            d["remaining"] = rm
+                            d["service"] = "JWP"
+                            d["total"] = t;
+                            d["terminal"] = SITE_ID
+                            localStorage.setItem("obj",JSON.stringify(d))
+                            window.location.href = "/timeout";
+                           
+                            
+                           
+                        }, CASH_TIME_OUT);
+
+
+        $.get(`https://${SERVER_IP}:443/jwp-money`,function(Data){
+               $("#currency").text(Data)
+               total_balance += parseFloat(Data)
+                $("#balance").text(total_balance);
+                  m = parseFloat($("#mon").text())
+     n = parseFloat($("#balance").text())
+     remBal =  m-n
+             clearTimeout(req_timeout);
+              console.log("TIMED CLEARED");
+               if (total_balance >= parseFloat($("#mon").text()) || remBal <= 0) {
+                     
+                        $(".next-button").click()   
+                            
+                
+               }
+               else{
+                           
+                   enableNV();
+
+               }
+              
+            
+           })
+           
+
+       
+        
+}
+
+$(document).ready(()=>{
+        $(".next-button").hide()
+        $('#pleaseWaitDialog').modal({
+    backdrop: 'static',
+    keyboard: false
+})     
+        $("#balance").text("0.00");
+    //    $("#acceptMoney").on("click", enableNV());  
+         
+         plan_detail = JSON.parse(localStorage.getItem("obj"))
+         $("#mon").text(plan_detail["amount"])
+         enableNV()
+    })
+    
+</script>

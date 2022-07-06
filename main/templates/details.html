@@ -1,0 +1,131 @@
+﻿@page
+@model NV200_Dashboard.Pages.detailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="container">
+      <h4 class="heading text-light">Network : <span id="net-id"></span></h4>
+     
+      <div class="navigation-buttons d-flex justify-content-between col-12">
+          <div class="back-button">
+            
+        </div>
+         <div class="next-button">
+            
+        </div>
+      </div>
+      
+      <center>
+       <div class="row" style="transform:translateY(-70%) !important;height:600px !important;background:rgba(255,255,255,0.2);border-radius:20px !important;box-shadow:0px 0px 8px #fff;z-index:200 !important">
+           <div class="col-6" id="num-keys">
+                <table style="margin-left:-30%;padding:10px !important">
+                    <tr>
+                        <td  class="digit">1</td>
+                         <td  class="digit">2</td>
+                          <td  class="digit">3</td>
+                    </tr>
+                     <tr>
+                        <td  class="digit">4</td>
+                         <td  class="digit">5</td>
+                          <td  class="digit">6</td>
+                    </tr>
+                     <tr>
+                        <td  class="digit">7</td>
+                         <td  class="digit">8</td>
+                          <td  class="digit">9</td>
+                    </tr>
+                     <tr>
+                        <td  class="digit" colspan="3">0</td>
+                          
+                    </tr>
+                </table>
+           </div>
+            <div class="col-6" id="number">
+                <input  class="input"  id="num" type="text" readonly disabled />
+                <br />
+                <button class="delete-button btn btn-danger">
+                         Clear
+                    </button>
+            </div>
+            
+
+       </div>
+    </center>
+    
+</div>
+ <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"
+            integrity="sha256-yE5LLp5HSQ/z+hJeCqkz9hdjNkk1jaiGG0tDCraumnA="
+            crossorigin="anonymous">
+    </script>
+<script>
+const validateObj = (o) => {
+    var flag = false
+    for (i in o) {
+       var g = o[i]
+        if (g != undefined && g != null && g.length > 0) {
+                flag = true
+        }
+    }
+    return flag
+}
+const readParamters = () => {
+    let searchParams = new URLSearchParams(window.location.search);
+    var cmpy = "";
+    if (searchParams.get("cmp") == undefined || searchParams.get("cmp") == null) {
+        cmpy = "";
+    }
+    else {
+        cmpy = searchParams.get("cmp")
+    }
+    let obj = {
+        "company":cmpy
+    }
+    localStorage.setItem("obj", JSON.stringify(obj));
+    let stat = validateObj(obj);
+    if (stat == false) {
+        window.location.href="/"
+    }
+    $("#net-id").text(obj["company"].replaceAll("-"," ").toUpperCase())
+}
+    $(document).ready(function(){
+        readParamters();
+           $(".next-button").hide()
+        $(".delete-button").on("click",(e)=>{
+            let value =$(".input").val()
+          let start = value.length - 1;
+            const newValue = value.substr(0, start);
+$(".input").val(newValue);
+  $(".next-button").hide()
+           
+        })
+          
+          $(".digit").on("click",(e)=>{
+              let newNumber = $(e.target).text()
+              let prev = $(".input").val().trim();
+              prev+=newNumber;
+            
+              if(prev.length == 3 || prev.length == 7){
+                  prev += "-";
+              }
+              console.info(prev.length)
+              if (prev.length <= 12) {
+                $(".input").val(prev);
+              }
+              else{
+                  alertify.alert("<h2 class='text-danger'>Number has Completed</h2>", function(){}).set({title:"Warning"}).set('closable', false).show();
+              
+              }
+
+                 value = $(".input").val();
+                if(value.length == 12){
+                    $(".next-button").show()
+                }else{
+$(".next-button").hide()
+         
+                }
+          })
+         //xxx-xxx-xxxx
+
+    })
+</script>

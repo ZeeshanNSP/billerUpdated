@@ -1,0 +1,51 @@
+﻿@page
+@model NV200_Dashboard.Pages.timeoutModel
+@{
+    
+    ViewData["title"] = "TIme out";
+}
+<div class="text-center justify-content-center">
+    <h1 class="text-light shadow-lg" style="font-size:20rem;">TIME OUT</h1>
+    
+</div>
+
+<script>
+$(document).ready(function() {
+    $("body").css("background","url('./assets/timeout.jpg') !important")
+    $("body").css("background-size","cover !important")
+    let d = JSON.parse(localStorage.getItem("obj"))
+    if(d == undefined || d == null){
+        window.location.href = "/";
+    }
+    let data = {
+        "amount":`${d["amount"]}`,
+        "mobile":d["number"],
+        "service":d["service"],
+        "terminal": SITE_ID,
+        "profile":d["plan"]["profile"],
+        "price":d["plan"]["price"],
+        "validity":d["plan"]["validity"],
+        "remaining":`${d["remaining"]}`,
+        "total" : `${d["total"]}`
+    }
+
+    //console.log(data)
+    $.get(`${ADD_PENDING_AMOUNT_END_POINT}${data["mobile"]}/${data["remaining"]}`, function(f) {
+            setTimeout(function() {
+
+
+         
+        $.post(`https://${SERVER_IP}:443/jwpTimeOut`, data, function(d1) {
+            window.location.href = "/"
+
+        })
+    }, 
+    1000);
+    })
+
+
+    
+    
+    
+})
+</script>
